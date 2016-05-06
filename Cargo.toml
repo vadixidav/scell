@@ -2,6 +2,10 @@
 name = "scell"
 version = "1.0.0"
 authors = ["Geordon Worley <vadixidav@gmail.com>"]
+description = "A smart container for objects in recursive data structures"
+keywords = ["cell", "rc", "scell", "smart", "smart cell", "managed", "runtime", "feature", "container", "mesh", "graph"]
+documentation = "https://vadixidav.github.io/scell/scell/"
+repository = "https://github.com/vadixidav/scell/"
 
 [features]
 default = []
