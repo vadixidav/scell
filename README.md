@@ -2,9 +2,9 @@
 A smart cell for Rust that allows feature gating for disabling runtime-checked borrows and provides a simple interface
 
 The intention of this crate is to allow the use of a `Rc<RefCell<T>>` throughout code where, after enough testing
-has been done, the `unchecked` feature can be enabled, which will convert SCell into a `Rc<UnsafeCell<T>>`.
+has been done, the `unchecked` feature can be enabled, which will convert `SCell` into a `Rc<UnsafeCell<T>>`.
 
-SCell provides all of the things that the combination of `Rc<RefCell<T>>` normally allow and some more, such as
+`SCell` provides all of the things that the combination of `Rc<RefCell<T>>` normally allow and some more, such as
 implementations for `PartialOrd` and `Ord`.
 
 If you plan to do significant testing in `debug` mode, add the `unchecked` feature to this crate in `release` mode.
