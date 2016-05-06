@@ -1,0 +1,8 @@
+[package]
+name = "scell"
+version = "1.0.0"
+authors = ["Geordon Worley <vadixidav@gmail.com>"]
+
+[features]
+default = []
+unchecked = []
