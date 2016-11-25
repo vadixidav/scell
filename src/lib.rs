@@ -13,6 +13,7 @@
 //! Alternatively, feel free to use this crate for normal use in graphs, meshes, and other recurrent data structures
 //! with lots of interconnectivity where the borrow checker simply can't help. Later, if your code works fine and you
 //! need the performance back from `RefCell`, just use the `unchecked` feature and your code will be good to go.
+#![cfg_attr(not(feature = "unchecked"), feature(ptr_eq))]
 
 #[cfg(not(feature = "unchecked"))]
 mod checked;
@@ -24,63 +25,8 @@ mod unchecked;
 #[cfg(feature = "unchecked")]
 pub use unchecked::*;
 
-use std::cmp::Ordering;
-use std::fmt::{Formatter, Display, Debug, Error, Pointer};
+use std::fmt::{Formatter, Display, Debug, Error};
 use std::hash::{Hasher, Hash};
-
-impl<T: ?Sized> PartialEq for SCell<T>
-    where T: PartialEq
-{
-    #[inline]
-    fn eq(&self, other: &Self) -> bool {
-        *self.borrow() == *other.borrow()
-    }
-
-    #[inline]
-    fn ne(&self, other: &Self) -> bool {
-        *self.borrow() != *other.borrow()
-    }
-}
-
-impl<T: ?Sized> Eq for SCell<T> where T: Eq {}
-
-impl<T: ?Sized> PartialOrd for SCell<T>
-    where T: PartialOrd
-{
-    #[inline]
-    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        self.borrow().partial_cmp(&*other.borrow())
-    }
-
-    #[inline]
-    fn lt(&self, other: &Self) -> bool {
-        *self.borrow() < *other.borrow()
-    }
-
-    #[inline]
-    fn le(&self, other: &Self) -> bool {
-        *self.borrow() <= *other.borrow()
-    }
-
-    #[inline]
-    fn gt(&self, other: &Self) -> bool {
-        *self.borrow() > *other.borrow()
-    }
-
-    #[inline]
-    fn ge(&self, other: &Self) -> bool {
-        *self.borrow() >= *other.borrow()
-    }
-}
-
-impl<T: ?Sized> Ord for SCell<T>
-    where T: Ord
-{
-    #[inline]
-    fn cmp(&self, other: &Self) -> Ordering {
-        self.borrow().cmp(&*other.borrow())
-    }
-}
 
 impl<T: ?Sized> Hash for SCell<T>
     where T: Hash
