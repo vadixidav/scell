@@ -14,6 +14,7 @@
 //! with lots of interconnectivity where the borrow checker simply can't help. Later, if your code works fine and you
 //! need the performance back from `RefCell`, just use the `unchecked` feature and your code will be good to go.
 
+#![feature(coerce_unsized, unsize)]
 #[cfg(not(feature = "unchecked"))]
 mod checked;
 #[cfg(not(feature = "unchecked"))]
@@ -26,6 +27,10 @@ pub use unchecked::*;
 
 use std::fmt::{Formatter, Display, Debug, Error};
 use std::hash::{Hasher, Hash};
+use std::ops::CoerceUnsized;
+use std::marker::Unsize;
+
+impl<T, U> CoerceUnsized<SCell<U>> for SCell<T> where T: Unsize<U> + ?Sized, U: ?Sized {}
 
 impl<T: ?Sized> Hash for SCell<T>
     where T: Hash
