@@ -78,15 +78,6 @@ where T: PartialEq
             *self.borrow() == *other.borrow()
         }
     }
-
-    #[inline]
-    fn ne(&self, other: &Self) -> bool {
-        if self.0.as_ptr() == other.0.as_ptr() {
-            false
-        } else {
-            *self.borrow() != *other.borrow()
-        }
-    }
 }
 
 impl<T: ?Sized> Eq for SCell<T> where T: Eq {}
